@@ -57,6 +57,6 @@ Like, `res->text` for text value from response or `res->json` for your json resp
 
 # TODO
 
+- Complete the README.md!
 - Create tests for required situations.
 - Allow keywords as a function in function-map
-- Complete the README.md.
