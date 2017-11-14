@@ -3,9 +3,9 @@ Fetch API wrapper for clojurescript!
 
 ## Install
 Add dependency to your project.clj file.
-```
-[org.clojars.scknkkrer/suluk "0.0.2"] 
-```
+
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.scknkkrer/suluk.svg)](https://clojars.org/org.clojars.scknkkrer/suluk)
+
 ## Usage
 
 ### Require Library
@@ -37,12 +37,10 @@ Like, `res->text` for text value from response or `res->json` for your json resp
 ```
 (suluk/fetch! :get "api.masallah.tu.tu/kere?n=41" :done-f #(re-frame.core/dispatch [:spit %]))
 ```
-
-```
-(suluk/fetch!
-```
-
-
+.
+.
+.
+.
 ```
 (def answer-prop
   {;;:method "POST" ;; Default :method key will set by request type, :post, :get, etc...
