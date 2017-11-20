@@ -1,26 +1,37 @@
 (ns suluk.core
-  (:require [suluk.process]))
+  (:require [suluk.process :as process]))
 
-(def ^{:doc "Takes Request Type as Keyword,
+(defn fetch!
+  "Takes Request Type as Keyword,
    Process;
 
-   :get -> (fn [URL & function-map])
+   :get -> (fn [URL, & DATA, function-map])
    |> URL: Get Request URL address.
-   |> function-map: A map contains Parameter, Fail, Done and `Rest` functions.
-      Additionally, it contains middle-ware functions to allow you to do data manipulations on your response with `rest-fs`.
+   |> function-map:
+        `:param-f` First ring on your call-back chain.
+        It can be one of fn under `suluk.response`: `res->text`, `res->blob`, `res->json`
+        `:fail-f` Catch function for your JS Promise. Default `js/console.error`
+        `:fns` Vector of functions with (response -> response) function signature. Chain of call-backs.
 
-   :post -> (fn [URL, DATA, & function-map])
-   |> URL: Get Request URL address.
+   :post -> (fn [URL, & DATA, function-map])
+   |> URL: Post Request URL address.
    |> DATA: Your Payload.
-   |> function-map: A map contains Parameter, Fail and Done functions.
-      Additionally, it contains middle-ware functions to allow you to do data manipulations on your response with `rest-fs`.
+   |> function-map:
+        `:param-f` First ring on your call-back chain.
+        It can be one of fn under `suluk.response`: `res->text`, `res->blob`, `res->json`
+        `:fail-f` Catch function for your JS Promise. Default `js/console.error`
+        `:fns` Vector of functions with (response -> response) function signature. Chain of call-backs.
 
-   :post-json -> (fn [URL, DATA, & function-map])
-   |> URL: Get Request URL address.
+   :post-json -> (fn [URL, & DATA, function-map])
+   |> URL: Post Request URL address.
    |> DATA: Your Payload. But, implicitly converted JSON with JSON/stringify.
-   |> function-map: A map contains Parameter, Fail and Done functions.
-      Additionally, it contains middle-ware functions to allow you to do data manipulations on your response with `rest-fs`.
+   |> function-map:
+        `:param-f` First ring on your call-back chain.
+        It can be one of fn under `suluk.response`: `res->text`, `res->blob`, `res->json`
+        `:fail-f` Catch function for your JS Promise. Default `js/console.error`
+        `:fns` Vector of functions with (response -> response) function signature. Chain of call-backs."
 
-   `rest-fs` is sequentially process your data. One function's output is input data for the next."}
-  fetch! suluk.process/fetch!)
-
+  [r-type url & args]
+  (let [function-type (process/classify r-type)
+        function-result (apply function-type url args)]
+    function-result))

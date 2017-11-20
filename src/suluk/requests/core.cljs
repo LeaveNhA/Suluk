@@ -6,3 +6,7 @@
 (def post p/post)
 (def get g/get)
 (def post-json p/post-json)
+
+(def get-> g/get->)
+(def post-> p/post->)
+(def post-json-> p/post-json->)

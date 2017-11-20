@@ -1,5 +1,6 @@
 (ns suluk.requests.type
-  (:require [suluk.constants.constants :as constants]))
+  (:require [suluk.constants.constants :as constants]
+            [suluk.constants.constants :as cs]))
 
 (defrecord ^{:doc "A record type for fetch."} ->Fetch-Request [url prop function-map])
 
@@ -75,3 +76,31 @@
 
 (defn ->fetch [fetch-request]
   (-> fetch-request process-headers request->cFetch (process-function-map-on-cFetch (get-function-map fetch-request))))
+
+(defn ->requestS [url & prop?-function-map?]
+  (fn [wrapper]
+    (let [[prop function-map]
+         (cond
+           (zero? (count prop?-function-map?)) [{} {}]
+           (zero? (mod (count prop?-function-map?) 2)) [{} (apply hash-map prop?-function-map?)]
+           :else [(first prop?-function-map?) (rest prop?-function-map?)])]
+      (wrapper (new ->Fetch-Request url prop function-map)))))
+
+
+(defn ->requestE [url & prop?-function-map?]
+  (fn [wrapper]
+    (let [[prop function-map]
+          (cond
+            (zero? (count prop?-function-map?)) [{} {}]
+            (zero? (mod (count prop?-function-map?) 2)) [{} (apply hash-map prop?-function-map?)]
+            :else [(first prop?-function-map?) (rest prop?-function-map?)])]
+      (js/console.log "wrapper: " wrapper
+                      "[prop function-map]: " prop function-map)
+      (fn [& fns]
+        (js/console.log "Inner applicator invoked!")
+        (apply-all-fns->cFetch (wrapper (new ->Fetch-Request url prop function-map)) fns)))))
+
+(defn wrap-fetch! [wrapper-fn]
+  (fn [request]
+    (let [res (wrapper-fn request)]
+      (->fetch res))))
