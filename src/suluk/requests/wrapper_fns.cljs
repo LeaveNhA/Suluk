@@ -18,3 +18,8 @@
     (let [res (wrapper-fn request)]
       (js/console.log (get-in res [:prop :method]))
       res)))
+
+(defn wrap-json-content [wrapper-fn]
+  (fn [request]
+    (let [res (wrapper-fn request)]
+      (update-in [:prop :body] js/JSON.stringify))))
