@@ -5,7 +5,7 @@
   (fn [request]
     (let [res (wrapper-fn request)
           content-type ((or content-type :default) cs/content-types)]
-      (assoc-in res [:prop "Content-Type"] content-type))))
+      (assoc-in res [:prop :headers "Content-Type"] content-type))))
 
 (defn wrap-method-type-with [wrapper-fn & [method-type]]
   (fn [request]
@@ -22,4 +22,4 @@
 (defn wrap-json-content [wrapper-fn]
   (fn [request]
     (let [res (wrapper-fn request)]
-      (update-in [:prop :body] js/JSON.stringify))))
+      (update-in res [:prop :body] #(-> % clj->js js/JSON.stringify)))))

@@ -8,7 +8,7 @@
     (req
      (-> identity
          (wrappers/wrap-method-type-with "POST")
-         (wrappers/wrap-content-type-with :json)
+         (wrappers/wrap-content-type-with :post)
          t/wrap-fetch!))))
 
 (defn post-json [url & prop?-function-map?]
@@ -16,7 +16,7 @@
     (req
      (-> identity
          (wrappers/wrap-method-type-with "POST")
-         (wrappers/wrap-content-type-with :post)
+         (wrappers/wrap-content-type-with :json)
          wrappers/wrap-json-content
          t/wrap-fetch!))))
 
@@ -33,6 +33,6 @@
     (req
      (-> identity
          (wrappers/wrap-method-type-with "POST")
-         (wrappers/wrap-content-type-with :post)
+         (wrappers/wrap-content-type-with :json)
          wrappers/wrap-json-content
          t/wrap-fetch!))))

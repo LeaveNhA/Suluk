@@ -18,8 +18,7 @@
 
 (defn- map->headers [header-args]
   (let [header-value (new js/Headers)]
-    (reduce (fn [r v] (.append header-value (first v) (second v))
-              header-value) header-value header-args)
+    (reduce (fn [r v] (.append header-value (first v) (second v))) header-value header-args)
     header-value))
 
 (defn- process-headers [fetch-request]
