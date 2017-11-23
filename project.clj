@@ -1,11 +1,12 @@
-(defproject org.clojars.scknkkrer/suluk "0.0.4"
-  :description "Fetch API wrapper for clojurescript"
+(defproject org.clojars.scknkkrer/suluk "0.0.5"
+  :description "Fetch API wrapper for clojurescript."
   :url "https://github.com/LeaveNhA/suluk"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies
-  [[org.clojure/clojurescript "1.9.946" :scope "provided"]]
+  [[org.clojure/clojurescript "1.9.946" :scope "provided"]
+   [re-frame "0.10.2"]]
 
   :lein-release {:deploy-via :clojars}
 
