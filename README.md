@@ -19,6 +19,8 @@ Require ```suluk```from your project.
 
 # TODO
 
+- Change the way the work of this library!
+
 - Complete the README.md!
 - Create tests for required situations.
 - Allow keywords as a function in function-map

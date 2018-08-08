@@ -1,4 +1,4 @@
-(defproject org.clojars.scknkkrer/suluk "0.0.7"
+(defproject org.clojars.scknkkrer/suluk "0.0.9"
   :description "Fetch API wrapper for clojurescript."
   :url "https://github.com/LeaveNhA/suluk"
   :license {:name "Eclipse Public License"
@@ -18,7 +18,7 @@
             [lein-release "1.1.0"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
-  :profiles {:user {:signing {:gpg-key "00616B4F"}}
+  :profiles {:user {:signing {:gpg-key "AFEF1B9FFC0B1500"}}
              :dev {:repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                       :target-path]
@@ -41,4 +41,12 @@
                                    :preloads [devtools.preload]
                                    :source-map-timestamp true
                                    :warnings true
-                                   :source-map true}}]})
+                                   :source-map true}}
+                       {:id "prod"
+                        :source-paths ["src"]
+                        :incremental true
+                        :compiler {:output-to "resources/public/js/compiled/suluk.js"
+                                   :pretty-print false
+                                   :main suluk.core
+                                   :closure-defines {goog.DEBUG false}
+                                   :optimizations :advanced}}]})

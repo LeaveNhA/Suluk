@@ -19,7 +19,7 @@
   function-map {:fail-f js/console.error
                    :status-safe-f status-safe?
                    :param-f r/res->text
-                   :done-f identity #_js/console.log})
+                   :done-f js/console.log})
 
 (defn add-content-type->request [request type-of-request]
   (-> request (assoc-in [:prop :headers "Content-Type"] (type-of-request content-types))))

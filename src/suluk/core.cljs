@@ -1,5 +1,6 @@
 (ns suluk.core
-  (:require [suluk.process :as process]))
+  (:require [suluk.process :as process]
+            [suluk.requests.type :as t]))
 
 (defn fetch!
   "Takes Request Type as Keyword,

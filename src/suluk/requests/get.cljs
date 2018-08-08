@@ -4,18 +4,9 @@
             [suluk.response :as r]
             [suluk.requests.wrapper-fns :as wrappers]))
 
-(defn get [url & prop?-function-map?]
-  (let [req (apply t/->requestS url prop?-function-map?)]
-    (req
-     (-> identity
-         wrappers/wrap-content-type-with
-         wrappers/wrap-method-type-with
-         t/wrap-fetch!))))
-
-(defn get-> [url & prop?-function-map?]
-  (let [req (apply t/->requestE url prop?-function-map?)]
-    (req
-     (-> identity
-         wrappers/wrap-content-type-with
-         wrappers/wrap-method-type-with
-         t/wrap-fetch!))))
+(defn get [url & [prop function-map]]
+  (let [req (t/->Fetch-Map url prop function-map)]
+    (-> req
+        wrappers/put-content-type-with
+        wrappers/put-method-type-with
+        t/fetch!)))
