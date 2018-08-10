@@ -9,7 +9,7 @@
 
 (def content-types
   {:post "application/x-www-form-urlencoded"
-   :json "application/json"
+   :json "application/json; charset=utf-8"
    :default "text/html; charset=utf-8"})
 
 (def accept

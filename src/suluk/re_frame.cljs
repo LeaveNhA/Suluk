@@ -5,7 +5,7 @@
 (re-frame/reg-fx
  :suluk!
  (fn [request]
-   (when js/DEBUG
+   (when ^boolean goog.DEBUG
      (js/console.log ":suluk! effect invoked with:\n"
-                     request))
+                     (clj->js request)))
    (apply suluk/fetch! request)))

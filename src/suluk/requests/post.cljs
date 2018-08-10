@@ -8,6 +8,7 @@
     (-> req
         (wrappers/put-method-type-with "POST")
         (wrappers/put-content-type-with :post)
+        wrappers/put-query-string-into-function-map
         t/fetch!)))
 
 (defn post-json [url & [prop function-map]]

@@ -45,12 +45,78 @@ Require ```suluk```from your project.
 ;; Returns promise for the future usage.
 ;; The third argument of the function is applied to response of the request,
 ;; With left-to-right direction respectively. 
+
+;; POST -> [url properties-map function-map]
+;; POST request example:
+(fetch! :post "https://jsonplaceholder.typicode.com/posts"
+        {:body "hello=bello&userId=1991"}
+        [suluk.response/res->json js/console.info])
+;; => #object [Promise [object Promise]]
+;; CONSOLE: {hello: "bello", userId: "1991", id: 101}
+
+;; You can use clojure hash-map as request body in your post request.
+(fetch! :post "https://jsonplaceholder.typicode.com/posts"
+        {:body {:hello "bello" :userId 1991}}
+        [suluk.response/res->json js/console.info])
+;; => #object [Promise [object Promise]]
+;; CONSOLE: {hello: "bello", userId: "1991", id: 101}
+
+
+;; POST-JSON -> [url properties-map function-map]
+;; POST-JSON request example:
+(fetch! :post-json "https://jsonplaceholder.typicode.com/posts"
+        {:body {:title "Başlık"
+                :body "Gövde"
+                :userId 1992}}
+        js/console.info)
+;; => #object [Promise [object Promise]]
+;; CONSOLE: {title: "Başlık", body: "Gövde", userId: 1992, id: 101}
+;; post-json keyword is using for post request with JSON payload that waiting response as JSON object.
+;; It is eleminating efforts and take care small works.
 ```
 
+### Using with Re-Frame
+If you want to use Suluk with re-frame, all you have to do is:
+
+Require `suluk.re-frame` namespace from your event namespace to load existed fx function that comes with `Suluk`
+
+```clojure
+(ns perfect.re-frame.app.events
+(:require ...
+          [suluk.re-frame]))
+          
+```
+
+The effect named `suluk!` is loaded and ready to use.
+
+```clojure
+(re-frame/reg-fx
+ :console!
+ (fn [value]
+   (js/console.info value)))
+
+(re-frame/reg-event-fx
+ :user/test!
+ (fn [_ [_ value]]
+   {:console! value}))
+
+(re-frame/reg-event-fx
+ :user/get-dummy-api-json
+ (fn [_ _]
+   {:suluk! [:post-json "https://jsonplaceholder.typicode.com/posts"
+             {:body {:title "Başlık"
+                     :body "Gövde"
+                     :userId 1992}}
+             #(re-frame/dispatch [:user/test! %])]}))
+             
+(re-frame/dispatch [:user/get-dummy-api-json])
+```
 
 # TODO
 
-- [x] Change the way the work of this library! | 08.09.2018
-
-- [ ] Complete the README.md!
+- [x] Change the way the work of this library!
+- [x] Complete the README.md!
 - [ ] Allow keywords as a function in function-map
+
+# THANK
+Thank you all clojurians, this library aims to give something back to our perfect community!

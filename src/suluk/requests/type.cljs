@@ -1,6 +1,8 @@
 (ns suluk.requests.type
   (:require [suluk.constants.constants :as cs]))
 
+(declare function-map-as-vector->fns-key)
+
 (def default-function-map
   {:fail-f js/console.error
    :done-f js/console.info})
