@@ -63,7 +63,8 @@
                          (js/fetch
                           url-
                           prop-))]
-    (js/console.info (clj->js [url- prop- fetch-instance]))
+    (when ^boolean goog.DEBUG
+      (js/console.info (clj->js [url- prop- fetch-instance])))
     (assoc fetch-map :fetch-instance fetch-instance)))
 
 (defn- ^{:doc "Before initialized!"}
@@ -113,7 +114,6 @@
       fetch-map)))
 
 (defn fetch! [fetch-map]
-  (js/console.info (clj->js fetch-map))
   (-> fetch-map
       process-headers
       put-Fetch->fetch-map
