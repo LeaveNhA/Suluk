@@ -10,3 +10,9 @@
         wrappers/put-content-type-with
         wrappers/put-method-type-with
         t/fetch!)))
+
+(defn get* [url & [function-map]]
+  (let [req (t/->Fetch-Map url {} function-map)]
+    (-> req
+        wrappers/put-method-type-with
+        t/fetch!)))

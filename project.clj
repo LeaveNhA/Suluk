@@ -1,12 +1,13 @@
-(defproject org.clojars.scknkkrer/suluk "0.0.18"
+(defproject org.clojars.scknkkrer/suluk "0.0.20"
   :description "Fetch API wrapper for clojurescript."
   :url "https://github.com/LeaveNhA/suluk"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies
-  [[org.clojure/clojurescript "1.9.946" :scope "provided"]
-   [re-frame "0.10.2"]]
+  [[org.clojure/clojure "1.8.0"]
+   [org.clojure/clojurescript "1.10.238" :scope "provided"]
+   [re-frame "0.10.5"]]
 
   :lein-release {:deploy-via :clojars}
 
@@ -19,6 +20,7 @@
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :profiles {:user {:signing {:gpg-key "AFEF1B9FFC0B1500"}}
+             :prod {}
              :dev {:repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                       :target-path]

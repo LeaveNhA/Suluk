@@ -52,7 +52,9 @@
     header-value))
 
 (defn- process-headers [fetch-request]
-  (update-in fetch-request [:prop :headers] map->headers))
+  (if (nil? (get-in fetch-request [:prop :headers]))
+    fetch-request
+    (update-in fetch-request [:prop :headers] map->headers)))
 
 (defn- put-Fetch->fetch-map [fetch-map]
   (let [url- (get-url fetch-map)
