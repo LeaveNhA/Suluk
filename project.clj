@@ -1,4 +1,4 @@
-(defproject org.clojars.scknkkrer/suluk "0.0.16"
+(defproject org.clojars.scknkkrer/suluk "0.0.18"
   :description "Fetch API wrapper for clojurescript."
   :url "https://github.com/LeaveNhA/suluk"
   :license {:name "Eclipse Public License"
